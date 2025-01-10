@@ -89,6 +89,9 @@ if uploaded_file is not None:
         analysis_choice = st.radio("Select An option:", ["Correlation", "R^2"])
 
         if analysis_choice == "Correlation":
+            st.write('Correlation measures the strenght of dependence of variables. It ranges from -1 to 1 where '
+                     '1 is perfect correlation (if a variable grows the other grows accordingly) and -1 is perfect anti-correlation (if a variable grow the other decrease). '
+                     '0 is evidence of no correlation between variables.')
             if not numeric_columns.empty:
                 st.write("Correlation between variables:")
                 correlation_matrix = numeric_columns.corr()
