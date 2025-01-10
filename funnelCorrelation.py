@@ -87,7 +87,7 @@ if uploaded_file is not None:
 
         # Rimuove eventuali colonne non numeriche
         numeric_columns = df.select_dtypes(include=["number"])
-        analysis_choice = st.radio("Select An option:", ["Correlation", "R^2"])
+        analysis_choice = st.radio("Select An option:", ["Correlation", "R^2 (advanced)"])
 
         if analysis_choice == "Correlation":
             st.text('Correlation measures the strenght of dependence of variables. It ranges from -1 to 1 where '
