@@ -105,15 +105,17 @@ if uploaded_file is not None:
                 
             else:
                 st.warning("No numeric columns, check input data.")
-        elif analysis_choice == "R^2":
+        elif analysis_choice == "R^2 (advanced)":
+            st.text('$R^2$ measures the goodness of a linear fit between two variables or how well the variation of a variable explains the variation of another.')
             if not numeric_columns.empty:
                 st.write("R^2 Calculation:")
                 r2_matrix = calculate_r2_matrix(df.fillna(0))
-                r2_matrix = r2_matrix.astype(float).round(3)  # Formattazione della matrice
+                r2_matrix = r2_matrix.astype(float).round(2)
                 st.dataframe(r2_matrix)
 
+                vmin, vmax = st.slider('Select Range Scale of Legend', min_value=-1., max_value=1., value=(-1.,1.), step=.05)
                 st.subheader("Heatmap")
-                plot_heatmap(r2_matrix)
+                plot_heatmap(r2_matrix, vmin, vmax)
 
             else:
                 st.warning("No numeric columns, check input data.")
