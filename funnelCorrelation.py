@@ -89,7 +89,7 @@ if uploaded_file is not None:
         analysis_choice = st.radio("Select An option:", ["Correlation", "R^2"])
 
         if analysis_choice == "Correlation":
-            st.secrets('Correlation measures the strenght of dependence of variables. It ranges from -1 to 1 where '
+            st.text('Correlation measures the strenght of dependence of variables. It ranges from -1 to 1 where '
                      '1 is perfect correlation (if a variable grows the other grows accordingly) and -1 is perfect anti-correlation (if a variable grows the other decreases). '
                      'A value of 0  is evidence of no correlation between variables.')
             
