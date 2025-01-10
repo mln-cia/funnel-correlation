@@ -46,6 +46,7 @@ def calculate_r2_matrix(df):
 
     return r2_matrix
 
+
 def plot_heatmap(df, vmin, vmax):
     fig, ax = plt.subplots(figsize=(20, 5))
     sns.heatmap(
