@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+st.set_page_config(layout="wide")
 from sklearn.linear_model import LinearRegression
 import io
 import seaborn as sns
@@ -45,6 +46,22 @@ def calculate_r2_matrix(df):
 
     return r2_matrix
 
+def plot_heatmap(df, vmin, vmax):
+    fig, ax = plt.subplots(figsize=(20, 5))
+    sns.heatmap(
+        df,
+        annot=True,
+        fmt=".2%",
+        cmap="coolwarm",
+        cbar=True,
+        ax=ax,
+        vmin=vmin,
+        vmax=vmax,
+        mask=np.triu(np.ones_like(df, dtype=bool))                
+        )
+    st.pyplot(fig)
+
+
 # Titolo dell'app
 st.title("YouGov Data Funnel Correlation")
 
@@ -77,20 +94,11 @@ if uploaded_file is not None:
                 correlation_matrix = numeric_columns.corr()
                 st.dataframe(correlation_matrix)
 
+                vmin, vmax = st.slider('Select Range Scale of Legend', min_value=-1., max_value=1., value=(-1.,1.), step=.05)
                 st.subheader("Heatmap")
-                fig, ax = plt.subplots(figsize=(20, 5))
-                sns.heatmap(
-                    correlation_matrix,
-                    annot=True,
-                    fmt=".2%",
-                    cmap="coolwarm",
-                    cbar=True,
-                    ax=ax,
-                    vmin=-1,
-                    vmax=1,
-                    mask=np.triu(np.ones_like(correlation_matrix, dtype=bool))                
-                    )
-                st.pyplot(fig)
+                plot_heatmap(correlation_matrix, vmin, vmax)
+                
+                
             else:
                 st.warning("No numeric columns, check input data.")
         elif analysis_choice == "R^2":
@@ -101,19 +109,8 @@ if uploaded_file is not None:
                 st.dataframe(r2_matrix)
 
                 st.subheader("Heatmap")
-                fig, ax = plt.subplots(figsize=(20, 5))
-                sns.heatmap(
-                    r2_matrix,
-                    annot=True,
-                    fmt=".2%",
-                    cmap="coolwarm",
-                    cbar=True,
-                    ax=ax,
-                    vmin=0,
-                    vmax=1,
-                    mask=np.triu(np.ones_like(r2_matrix, dtype=bool))                
-                    )
-                st.pyplot(fig)
+                plot_heatmap(r2_matrix)
+
             else:
                 st.warning("No numeric columns, check input data.")
 
